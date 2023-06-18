@@ -22,7 +22,7 @@ df = load_data()
 
 state = ['Total Cases', 'Total Active Cases', 'Total Deaths']
 
-visualization = st.sidebar.selectbox('Select a chart type',('Bar chart','Pie chart','linechart'))
+visualization = st.sidebar.selectbox('Select a chart type',('Bar Chart','Pie Chart','Line Chart'))
 #state_select = st.sidebar.selectbox('Select a state', df['state'].unique())
 state_select = st.sidebar.selectbox('Select a state',state)
 status_select = st.sidebar.radio('Covid-19 patient status',("Total Confirmed Cases", "Total Active Cases","Total Death Cases","Total Recovered Cases"))
@@ -35,9 +35,10 @@ def get_total_dataframe(df):
    # date = datetime.strptime(df.loc[df['Date']], '%m/%d/%Y')
     
     total_dataframe = pd.DataFrame({
-        #'Status':['Confirmed', 'Recovered','Deaths','Active'],
-        #'Number of cases':(df.iloc[0]['Total Cases'], df.iloc[0]['Total Active Cases'], df.iloc[0]['Total Recovered'],df.iloc[0]['Total Deaths']), 
-        'Total Cases':(df.iloc[0]['Date'] , df.iloc[0]['Total Cases'])
+        'Status':['Confirmed', 'Recovered','Deaths','Active'],
+        'Number of cases':(df.iloc[0]['Total Cases'], df.iloc[0]['Total Active Cases'], df.iloc[0]['Total Recovered'],df.iloc[0]['Total Deaths']), 
+        
+        #'Total Cases':(df.iloc[0]['Date'] , df.iloc[0]['Total Cases'])
        
         #'Total Cases':(df.iloc[df['Total Cases']])
     })
@@ -45,7 +46,7 @@ def get_total_dataframe(df):
 
 state_total = get_total_dataframe(selected_state)
 
-st.line_chart(state_total)
+
 
 
 if visualization == 'Bar Chart':
@@ -74,8 +75,9 @@ elif visualization == 'Pie Chart':
         st.plotly_chart(fig)
 
 elif visualization =='Line Chart':
-    if status_select == 'Total Deaths cases':
+    if status_select == 'Total Deaths Cases':
         st.title("Total Death Cases Among states")
+        #st.line_chart(state_total)
 
 def get_table():
     datatable = df[['Date','Location','Total Cases', 'Total Active Cases', 'Total Deaths']].sort_values(by=['Total Cases'],ascending=False)
